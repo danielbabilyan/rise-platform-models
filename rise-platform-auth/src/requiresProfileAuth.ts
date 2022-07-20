@@ -43,6 +43,7 @@ export async function requiresProfileAuth(
 
     next();
   } catch (error) {
+    console.error(error);
     res.clearCookie(PROFILE_TOKEN_COOKIE_NAME);
     return res.sendStatus(401);
   }

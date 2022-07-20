@@ -11,7 +11,7 @@ datasource db {
 model Platform {
   id          Int      @id @default(autoincrement()) @db.UnsignedInt
   account_id  Int      @db.UnsignedInt
-  name        String   @db.VarChar(128)
+  name        PlatformName
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   account     Account  @relation(fields: [account_id], references: [id])
@@ -34,8 +34,8 @@ model User {
   id          Int      @id @default(autoincrement()) @db.UnsignedInt
   profile_id  Int      @db.UnsignedInt
   account_id  Int      @db.UnsignedInt
-  permissions String?  @db.VarChar(255)
-  status      String?  @db.VarChar(255)
+  permissions String  @db.VarChar(255)
+  status      UserStatus 
   is_admin    Boolean? @default(false)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
@@ -47,10 +47,22 @@ model User {
 model Account {
   id         Int      @id @default(autoincrement()) @db.UnsignedInt
   name       String   @db.VarChar(128)
-  licenses   String?  @db.VarChar(255)
+  licenses   String  @db.VarChar(255)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   platforms  Platform[]
-  users       User[]
+  users      User[]
   @@map("accounts")
+}
+
+enum PlatformName {
+  SHOPIFY
+  AMAZON
+  SQUARE
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+  INVITED
 }

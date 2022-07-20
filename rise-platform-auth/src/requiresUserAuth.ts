@@ -45,6 +45,7 @@ export const requiresUserAuth =
 
       next();
     } catch (error) {
+      console.error(error);
       res.clearCookie(USER_TOKEN_COOKIE_NAME);
       return res.sendStatus(401);
     }
