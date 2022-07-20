@@ -1,14 +1,11 @@
 {
   "name": "@giftwizard/rise-platform-auth",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "prepare": "yarn run compile",
     "compile": "tsc",
-    "preexample": "yarn run compile",
-    "type-check": "tsc --noEmit",
-    "prepublishOnly": "npm run compile"
+    "prepublishOnly": "yarn run compile"
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1"
