@@ -1,6 +1,16 @@
-import type { PrismaClient } from "@prisma/client";
+import type { Account, PrismaClient, Profile, User } from "@prisma/client";
 import "express";
-import type { ProfileContext, UserContext } from "./types";
+
+type ProfileContext = Profile & {
+  users: (User & {
+    account: Account;
+  })[];
+};
+
+type UserContext = User & {
+  account: Account;
+  profile: Profile;
+};
 
 declare global {
   var db_models: PrismaClient;
