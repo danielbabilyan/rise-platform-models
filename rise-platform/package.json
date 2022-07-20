@@ -1,0 +1,25 @@
+{
+  "name": "@giftwizard/rise-platform-auth",
+  "version": "1.0.4",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "yarn run compile",
+    "compile": "tsc",
+    "preexample": "yarn run compile",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run compile"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@prisma/client": "^4.1.0",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "prisma": "^4.1.0"
+  },
+  "prisma": {
+    "schema": "./schema.prisma"
+  }
+}
