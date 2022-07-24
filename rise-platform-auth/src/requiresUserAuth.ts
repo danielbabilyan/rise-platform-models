@@ -41,7 +41,7 @@ export const requiresUserAuth =
       });
 
       if (!user) throw new Error("user not found");
-      req.rise_user = user;
+      req.user = user;
 
       next();
     } catch (error) {

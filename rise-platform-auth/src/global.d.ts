@@ -17,7 +17,7 @@ declare global {
   namespace Express {
     interface Request {
       profile?: ProfileContext | null;
-      rise_user?: UserContext | null;
+      user?: UserContext | null;
     }
   }
 }

@@ -9,12 +9,13 @@ datasource db {
 
 
 model Platform {
-  id          Int      @id @default(autoincrement()) @db.UnsignedInt
-  account_id  Int      @db.UnsignedInt
+  id          Int          @id @default(autoincrement()) @db.UnsignedInt
+  account_id  Int          @db.UnsignedInt
   name        PlatformName
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  account     Account  @relation(fields: [account_id], references: [id])
+  meta        Json
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  account     Account      @relation(fields: [account_id], references: [id])
   @@map("platforms")
 }
 
@@ -31,26 +32,26 @@ model Profile {
 }
 
 model User {
-  id          Int      @id @default(autoincrement()) @db.UnsignedInt
-  profile_id  Int      @db.UnsignedInt
-  account_id  Int      @db.UnsignedInt
-  permissions String  @db.VarChar(255)
-  status      UserStatus 
-  is_admin    Boolean? @default(false)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  profile     Profile  @relation(fields: [profile_id], references: [id])
-  account     Account  @relation(fields: [account_id], references: [id])
+  id          Int        @id @default(autoincrement()) @db.UnsignedInt
+  profile_id  Int        @db.UnsignedInt
+  account_id  Int        @db.UnsignedInt
+  permissions Json
+  status      UserStatus
+  is_admin    Boolean?   @default(false)
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  profile     Profile    @relation(fields: [profile_id], references: [id])
+  account     Account    @relation(fields: [account_id], references: [id])
   @@map("users")
 }
 
 model Account {
-  id         Int      @id @default(autoincrement()) @db.UnsignedInt
-  name       String   @db.VarChar(128)
-  licenses   String  @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  platforms  Platform[]
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  name       String     @db.VarChar(128)
+  licenses   Json
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  platforms  Platform[] 
   users      User[]
   @@map("accounts")
 }
