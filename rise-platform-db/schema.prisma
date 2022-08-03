@@ -7,59 +7,82 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model App {
-  id            Int          @id @default(autoincrement()) @db.UnsignedInt
-  account_id    Int          @db.UnsignedInt
-  platform_name PlatformName 
-  private_meta  Json
-  public_meta   Json
-  created_at    DateTime     @default(now())
-  updated_at    DateTime     @updatedAt
-  account       Account      @relation(fields: [account_id], references: [id])
+  id            String        @id @default(uuid())
+  secret        String
+  name          String
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  access_tokens AccessToken[]
+
+  @@unique([id, secret], name: "AppUnique")
   @@map("apps")
 }
 
+model AccessToken {
+  id           String   @id @default(uuid())
+  app_id       String
+  account_id   String
+  access_token String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  app          App      @relation(fields: [app_id], references: [id])
+  account      Account  @relation(fields: [account_id], references: [id])
+
+  @@unique([app_id, account_id], name: "AccessTokenUnique")
+  @@map("access_tokens")
+}
+
+model Inegration {
+  id           String   @id @default(uuid())
+  account_id   String
+  private_meta Json
+  public_meta  Json
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  account      Account  @relation(fields: [account_id], references: [id])
+
+  @@map("inegrations")
+}
+
 model Profile {
-  id            Int      @id @default(autoincrement()) @db.UnsignedInt
-  sub           String   @db.VarChar(128) @unique
-  email         String   @db.VarChar(128)
-  name          String   @db.VarChar(128)
-  profile_image String?  @db.MediumText
+  id            String   @id @default(uuid())
+  sub           String   @unique
+  email         String
+  name          String
+  profile_image String?
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
-  users          User[]
+  users         User[]
+
   @@map("profiles")
 }
 
 model User {
-  id          Int        @id @default(autoincrement()) @db.UnsignedInt
-  profile_id  Int        @db.UnsignedInt
-  account_id  Int        @db.UnsignedInt
+  id          String     @id @default(uuid())
+  profile_id  String
+  account_id  String
   permissions Json
   status      UserStatus
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
   profile     Profile    @relation(fields: [profile_id], references: [id])
   account     Account    @relation(fields: [account_id], references: [id])
+
   @@map("users")
 }
 
 model Account {
-  id         Int        @id @default(autoincrement()) @db.UnsignedInt
-  name       String     @db.VarChar(128)
-  licenses   Json
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt
-  apps  App[] 
-  users      User[]
-  @@map("accounts")
-}
+  id            String        @id @default(uuid())
+  name          String
+  licenses      Json
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  users         User[]
+  access_tokens AccessToken[]
+  inegrations   Inegration[]
 
-enum PlatformName {
-  SHOPIFY
-  AMAZON
-  SQUARE
+  @@map("accounts")
 }
 
 enum UserStatus {
