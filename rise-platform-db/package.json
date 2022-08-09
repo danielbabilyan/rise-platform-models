@@ -4,8 +4,8 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "compile": "tsc",
-    "prepublishOnly": "yarn run compile",
+    "build": "tsc",
+    "prepublishOnly": "yarn run build",
     "prepare": "yarn run prisma generate"
   },
   "dependencies": {

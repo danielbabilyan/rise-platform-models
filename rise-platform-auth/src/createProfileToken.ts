@@ -1,7 +1,7 @@
 import type { Profile } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
-export const PROFILE_TOKEN_COOKIE_NAME = "rpj";
+export const PROFILE_TOKEN_COOKIE_NAME = "profile_token";
 
 export function createProfileToken(profile: Profile) {
   const profile_token = jwt.sign(

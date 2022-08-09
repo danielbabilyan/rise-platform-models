@@ -48,9 +48,9 @@ model Inegration {
 model Profile {
   id            String   @id @default(uuid())
   sub           String   @unique
-  email         String
-  name          String
-  profile_image String?
+  email         String?
+  name          String?
+  profile_image String?  @db.VarChar(200)
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
   users         User[]
@@ -74,6 +74,7 @@ model User {
 
 model Account {
   id            String        @id @default(uuid())
+  domain        String
   name          String
   licenses      Json
   created_at    DateTime      @default(now())
