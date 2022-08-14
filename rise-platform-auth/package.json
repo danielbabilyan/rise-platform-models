@@ -8,16 +8,12 @@
     "prepublishOnly": "yarn run build"
   },
   "dependencies": {
+    "@giftwizard/rise-platform-db": "/Users/danielbab/Repo/platform/models/rise-platform-auth",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "@prisma/client": "^4.1.0",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/node": "^18.0.6",
-    "prisma": "^4.1.0"
-  },
-  "prisma": {
-    "schema": "./schema.prisma"
+    "@types/node": "^18.0.6"
   }
 }

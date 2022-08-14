@@ -1,4 +1,4 @@
-import type { Profile } from "@prisma/client";
+import type { Profile } from "@giftwizard/rise-platform-db";
 import jwt from "jsonwebtoken";
 
 export const PROFILE_TOKEN_COOKIE_NAME = "profile_token";

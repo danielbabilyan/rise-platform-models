@@ -5,7 +5,7 @@ import { USER_TOKEN_COOKIE_NAME } from "./createUserToken";
 import { getTokenFromReq } from "./getTokenFromReq";
 
 interface UserJwtPayload {
-  user_id: number;
+  user_id: string;
 }
 
 interface AuthOptions {
@@ -37,6 +37,7 @@ export const requiresUserAuth =
         include: {
           profile: true,
           account: true,
+          roles: true,
         },
       });
 

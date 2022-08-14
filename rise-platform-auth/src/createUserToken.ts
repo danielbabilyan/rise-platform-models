@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@giftwizard/rise-platform-db";
 import jwt from "jsonwebtoken";
 
 export const USER_TOKEN_COOKIE_NAME = "user_token";

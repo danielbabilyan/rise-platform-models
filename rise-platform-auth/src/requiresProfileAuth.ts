@@ -5,7 +5,7 @@ import { PROFILE_TOKEN_COOKIE_NAME } from "./createProfileToken";
 import { getTokenFromReq } from "./getTokenFromReq";
 
 interface ProfileJwtPayload {
-  profile_id: number;
+  profile_id: string;
 }
 
 export async function requiresProfileAuth(

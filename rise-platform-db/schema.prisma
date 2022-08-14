@@ -33,16 +33,17 @@ model AccessToken {
   @@map("access_tokens")
 }
 
-model Inegration {
+model PlatformAccessToken {
   id           String   @id @default(uuid())
+  platform     Platform
   account_id   String
-  private_meta Json
-  public_meta  Json
+  access_token String
+  meta         Json
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   account      Account  @relation(fields: [account_id], references: [id])
 
-  @@map("inegrations")
+  @@map("platform_access_tokens")
 }
 
 model Profile {
@@ -59,29 +60,41 @@ model Profile {
 }
 
 model User {
-  id          String     @id @default(uuid())
-  profile_id  String
-  account_id  String
-  permissions Json
-  status      UserStatus
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  profile     Profile    @relation(fields: [profile_id], references: [id])
-  account     Account    @relation(fields: [account_id], references: [id])
+  id         String     @id @default(uuid())
+  profile_id String
+  account_id String
+  status     UserStatus
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  roles      Role[]
+  profile    Profile    @relation(fields: [profile_id], references: [id])
+  account    Account    @relation(fields: [account_id], references: [id])
 
   @@map("users")
 }
 
+model Role {
+  id          String   @id @default(uuid())
+  user_id     String
+  name        String
+  permissions Json
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user        User     @relation(fields: [user_id], references: [id])
+
+  @@map("roles")
+}
+
 model Account {
-  id            String        @id @default(uuid())
-  domain        String
-  name          String
-  licenses      Json
-  created_at    DateTime      @default(now())
-  updated_at    DateTime      @updatedAt
-  users         User[]
-  access_tokens AccessToken[]
-  inegrations   Inegration[]
+  id                     String                @id @default(uuid())
+  domain                 String
+  name                   String
+  licenses               Json
+  created_at             DateTime              @default(now())
+  updated_at             DateTime              @updatedAt
+  users                  User[]
+  access_tokens          AccessToken[]
+  platform_access_tokens PlatformAccessToken[]
 
   @@map("accounts")
 }
@@ -90,4 +103,8 @@ enum UserStatus {
   ACTIVE
   DISABLED
   INVITED
+}
+
+enum Platform {
+  SHOPIFY
 }

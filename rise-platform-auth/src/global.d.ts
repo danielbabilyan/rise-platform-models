@@ -1,4 +1,9 @@
-import type { Account, PrismaClient, Profile, User } from "@prisma/client";
+import type {
+  Account,
+  DBClient,
+  Profile,
+  User,
+} from "@giftwizard/rise-platform-db";
 import "express";
 
 type ProfileContext = Profile & {
@@ -13,7 +18,7 @@ type UserContext = User & {
 };
 
 declare global {
-  var db_models: PrismaClient;
+  var db_models: DBClient;
   namespace Express {
     interface Request {
       profile?: ProfileContext | null;
