@@ -24,6 +24,7 @@ model AccessToken {
   app_id       String
   account_id   String
   access_token String
+  scopes       Json
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   app          App      @relation(fields: [app_id], references: [id])
@@ -74,13 +75,13 @@ model User {
 }
 
 model Role {
-  id          String   @id @default(uuid())
-  user_id     String
-  name        String
-  permissions Json
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  user        User     @relation(fields: [user_id], references: [id])
+  id         String   @id @default(uuid())
+  user_id    String
+  name       String
+  scopes     Json
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
 
   @@map("roles")
 }

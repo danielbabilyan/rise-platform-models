@@ -8,7 +8,7 @@
     "prepublishOnly": "yarn run build"
   },
   "dependencies": {
-    "@giftwizard/rise-platform-db": "/Users/danielbab/Repo/platform/models/rise-platform-auth",
+    "@giftwizard/rise-platform-db": "/Users/danielbab/Repo/platform/models/rise-platform-db",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
