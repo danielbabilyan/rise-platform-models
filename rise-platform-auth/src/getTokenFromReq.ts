@@ -1,11 +1,8 @@
 import type { Request } from "express";
 
 export function getTokenFromReq(req: Request) {
-  if (req.query.token) {
-    return req.query.token as string;
-  }
-  if (req.cookies["jwt"]) {
-    return req.cookies["jwt"] as string;
+  if (req.query.access_token) {
+    return req.query.access_token as string;
   }
   if (
     req.headers.authorization &&
