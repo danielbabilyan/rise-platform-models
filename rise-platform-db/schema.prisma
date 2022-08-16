@@ -11,6 +11,7 @@ model App {
   id            String        @id @default(uuid())
   secret        String
   name          String
+  logo_image    String?       @db.LongText()
   created_at    DateTime      @default(now())
   updated_at    DateTime      @updatedAt
   access_tokens AccessToken[]
