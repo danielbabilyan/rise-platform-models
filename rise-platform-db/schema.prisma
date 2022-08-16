@@ -52,7 +52,7 @@ model Profile {
   sub           String   @unique
   email         String?
   name          String?
-  profile_image String?  @db.VarChar(200)
+  profile_image String?  @db.LongText()
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
   users         User[]
