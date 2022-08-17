@@ -1,3 +1,4 @@
+import { Role, User } from "@giftwizard/rise-platform-db";
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
@@ -7,6 +8,19 @@ interface JwtPayload {
   profile_id: string;
   user_id: string;
 }
+
+export const isAllowedUser = (
+  user: User & { roles: Role[] },
+  scope: string
+) => {
+  const userScopes = user.roles?.flatMap((role) => role.scopes) as string[];
+
+  return user
+    ? userScopes.includes(scope) ||
+        userScopes.includes("owner") ||
+        userScopes.includes("admin")
+    : false;
+};
 
 export function requiresAuth({ scope }: { scope?: string } = {}) {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -49,11 +63,7 @@ export function requiresAuth({ scope }: { scope?: string } = {}) {
         if (!user) throw new Error("user not found");
 
         if (scope) {
-          const userScopes = user.roles.flatMap(
-            (role) => role.scopes
-          ) as string[];
-
-          if (!userScopes.includes(scope)) throw new Error("scope not found");
+          if (!isAllowedUser(user, scope)) throw new Error("scope not found");
         }
         req.user = user;
       }
