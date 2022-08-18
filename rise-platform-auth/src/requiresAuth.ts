@@ -9,16 +9,12 @@ interface JwtPayload {
   user_id: string;
 }
 
-export const isAllowedUser = (
-  user: User & { roles: Role[] },
-  scope: string
-) => {
-  const userScopes = user.roles?.flatMap((role) => role.scopes) as string[];
-
+export const isAllowedUser = (user: User & { role: Role }, scope: string) => {
+  const scopes = user.role.scopes as string[];
   return user
-    ? userScopes.includes(scope) ||
-        userScopes.includes("owner") ||
-        userScopes.includes("admin")
+    ? scopes.includes(scope) ||
+        scopes.includes("owner") ||
+        scopes.includes("admin")
     : false;
 };
 
@@ -42,6 +38,7 @@ export function requiresAuth({ scope }: { scope?: string } = {}) {
           users: {
             include: {
               account: true,
+              role: true,
             },
           },
         },
@@ -56,14 +53,14 @@ export function requiresAuth({ scope }: { scope?: string } = {}) {
           include: {
             profile: true,
             account: true,
-            roles: true,
+            role: true,
           },
         });
 
         if (!user) throw new Error("user not found");
 
-        if (scope) {
-          if (!isAllowedUser(user, scope)) throw new Error("scope not found");
+        if (scope && !isAllowedUser(user, scope)) {
+          throw new Error("scope not found");
         }
         req.user = user;
       }

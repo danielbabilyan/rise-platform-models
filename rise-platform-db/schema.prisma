@@ -65,10 +65,11 @@ model User {
   id         String     @id @default(uuid())
   profile_id String
   account_id String
+  role_id    String
   status     UserStatus
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
-  roles      Role[]
+  role       Role       @relation(fields: [role_id], references: [id])
   profile    Profile    @relation(fields: [profile_id], references: [id])
   account    Account    @relation(fields: [account_id], references: [id])
 
@@ -78,12 +79,12 @@ model User {
 
 model Role {
   id         String   @id @default(uuid())
-  user_id    String
+  account_id String?
   name       String
   scopes     Json
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  user       User     @relation(fields: [user_id], references: [id])
+  user       User[]
 
   @@map("roles")
 }
