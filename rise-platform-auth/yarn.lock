@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@giftwizard/rise-platform-db@/Users/danielbab/Repo/platform/models/rise-platform-db":
-  version "1.0.0"
-  dependencies:
-    jsonwebtoken "^8.5.1"
-
 "@giftwizard/rise-platform-db@file:../rise-platform-db":
   version "1.0.0"
   dependencies:

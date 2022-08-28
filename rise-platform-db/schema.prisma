@@ -94,6 +94,7 @@ model Account {
   domain                 String
   name                   String
   licenses               Json
+  logo_image             String?               @db.LongText()
   created_at             DateTime              @default(now())
   updated_at             DateTime              @updatedAt
   users                  User[]
