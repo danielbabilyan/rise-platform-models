@@ -31,7 +31,8 @@ model AccessToken {
   app          App      @relation(fields: [app_id], references: [id])
   account      Account  @relation(fields: [account_id], references: [id])
 
-  @@unique([app_id, account_id], name: "AccessTokenUnique")
+  @@unique([app_id, account_id])
+  @@unique([access_token, account_id])
   @@map("access_tokens")
 }
 
@@ -73,7 +74,8 @@ model User {
   profile    Profile    @relation(fields: [profile_id], references: [id])
   account    Account    @relation(fields: [account_id], references: [id])
 
-  @@unique([profile_id, account_id], name: "UserUnique")
+  @@unique([profile_id, account_id])
+  @@unique([profile_id, id])
   @@map("users")
 }
 

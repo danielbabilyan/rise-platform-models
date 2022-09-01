@@ -1,5 +1,6 @@
 import type {
   Account,
+  App,
   DBClient,
   Profile,
   Role,
@@ -7,24 +8,17 @@ import type {
 } from "@giftwizard/rise-platform-db";
 import "express";
 
-type ProfileContext = Profile & {
-  users: (User & {
-    role: Role;
-    account: Account;
-  })[];
-};
-
-type UserContext = User & {
-  role: Role;
-  account: Account;
-  profile: Profile;
+type ClientContext = {
+  profile?: Profile;
+  user?: User & { role: Role };
+  account?: Account;
+  app?: App;
 };
 declare global {
   var db_models: DBClient;
   namespace Express {
     interface Request {
-      profile?: ProfileContext | null;
-      user?: UserContext | null;
+      client?: ClientContext;
     }
   }
 }
