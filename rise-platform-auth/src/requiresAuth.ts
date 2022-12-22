@@ -18,11 +18,16 @@ interface Options {
 const apiLimiter = rateLimit({
   windowMs: 30 * 1000,
   max: (req, res) => {
-    const accountLicenses = req.client?.account?.licenses as string[];
-    if (accountLicenses?.includes("premium_rate_limit")) {
-      return 10;
+    const account_id = req.query.account_id;
+    if (account_id) {
+      const accountLicenses = req.client?.account?.licenses as string[];
+      if (accountLicenses?.includes("premium_rate_limit")) {
+        return 10;
+      }
+      return 5;
     }
-    return 5;
+
+    return 1000;
   },
   standardHeaders: true,
   legacyHeaders: false,
